@@ -1,43 +1,39 @@
-import axios from 'axios';
-import xml2j from 'xml2js';
-import { config } from 'dotenv';
 import { ApolloServer, gql } from 'apollo-server';
-import { Author } from './types';
+import axios from 'axios';
+import { config } from 'dotenv';
+import { LooseObject, parseGoodreadsResponse } from './utils';
 
 config();
 
 const goodreadsKey = process.env.GOODREADS_KEY;
 
-const fetchAuthor = async (id: string): Promise<void> => {
-  const data = (await axios.get(`https://www.goodreads.com/author/show/${id}?format=xml&key=${goodreadsKey}`))
-    .data;
-  return xml2j.parseString(data, (err, result) => {
-    const goodReadsResponse = result['GoodreadsResponse'];
-    const authorInfo: Author = goodReadsResponse['author'][0];
-    console.log(authorInfo);
-    return authorInfo;
-  });
+const fetchAuthor = async (id: string): Promise<LooseObject> => {
+  const resp = await axios.get(
+    `https://www.goodreads.com/author/show/${id}?format=xml&key=${goodreadsKey}`,
+  );
+  const parsed = parseGoodreadsResponse(resp.data);
+  return parsed.author;
 };
 
 const typeDefs = gql`
   type Author {
     id: String!
     name: String!
-    link: String!
-    fansCount: Int!
-    authorFollowersCount: Int!
-    largeImageUrl: String!
-    imageUrl: String!
-    smallImageUrl: String!
-    about: String!
-    influences: String!
-    worksCount: String!
-    gender: String!
-    hometown: String!
-    bornAt: String!
-    diedAt: String!
-    goodreadsAuthor: Boolean!
-    books: [Book!]!
+    # link: String!
+    # fansCount: Int!
+    # authorFollowersCount: Int!
+    # largeImageUrl: String!
+    # imageUrl: String!
+    # smallImageUrl: String!
+    # about: String!
+    # influences: String!
+    # worksCount: String!
+    # gender: String!
+    # hometown: String!
+    # bornAt: String!
+    # diedAt: String!
+    # goodreadsAuthor: Boolean!
+    # books: [Book!]!
   }
 
   type Book {
@@ -72,7 +68,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    author: () => fetchAuthor('18541'),
+    author: async () => fetchAuthor('18541'),
   },
 };
 
