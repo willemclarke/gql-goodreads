@@ -1,0 +1,44 @@
+type Author {
+  id: String!
+  name: String!
+  link: String!
+  fansCount: Int!
+  authorFollowersCount: Int!
+  largeImageUrl: String!
+  imageUrl: String!
+  smallImageUrl: String!
+  about: String!
+  influences: String!
+  worksCount: String!
+  gender: String!
+  hometown: String!
+  bornAt: String!
+  diedAt: String!
+  goodreadsAuthor: Boolean!
+  books: [Book!]!
+}
+
+type Book {
+  id: Int!
+  isbn: String!
+  isbn13: String!
+  textReviewsCount: Int!;
+  uri: String!
+  title: String!
+  titleWithoutSeries: String!
+  imageUrl: String!
+  smallImageUrl: String!
+  largeImageUrl: String!
+  link: String!
+  numPages: String!
+  format: String!
+  editionInformation: String!
+  publisher: String!
+  publicationDay: String!
+  publicationYear: String!
+  publicationMonth: String!
+  averageRating: String!
+  ratingsCount: String!
+  description: String!
+  authors: [Author!]!
+}
