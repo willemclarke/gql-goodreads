@@ -9,19 +9,19 @@ export interface Author {
   smallImageUrl: string;
   about: string;
   influences: string;
-  worksCount: string;
+  worksCount: number;
   gender: string;
   hometown: string;
   bornAt: string;
   diedAt: string;
   goodreadsAuthor: boolean;
-  books: [Book];
+  books: Book[];
 }
 
 interface Book {
   id: number;
-  isbn: string;
-  isbn13: string;
+  isbn: number;
+  isbn13: number;
   textReviewsCount: number;
   uri: string;
   title: string;
@@ -30,13 +30,14 @@ interface Book {
   smallImageUrl: string;
   largeImageUrl: string;
   link: string;
-  numPages: string;
+  numPages: number;
   format: string;
   editionInformation: string;
   publisher: string;
-  publicationDay: string;
-  publicationYear: string;
-  publicationMonth: string;
+  publicationDay: number;
+  publicationYear: number;
+  publicationMonth: number;
+  published: number;
   averageRating: string;
   ratingsCount: string;
   description: string;
