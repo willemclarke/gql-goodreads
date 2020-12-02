@@ -15,11 +15,11 @@ const removeEmptyObjects = (obj: LooseObject): LooseObject => {
 };
 
 const nativeType = (value: any) => {
-  var nValue = Number(value);
+  const nValue = Number(value);
   if (!isNaN(nValue)) {
     return nValue;
   }
-  var bValue = value.toLowerCase();
+  const bValue = value.toLowerCase();
   if (bValue === 'true') {
     return true;
   } else if (bValue === 'false') {
@@ -31,8 +31,8 @@ const nativeType = (value: any) => {
 
 const removeJsonTextAttribute = (value: string, parentElement: LooseObject) => {
   try {
-    var keyNo = Object.keys(parentElement._parent).length;
-    var keyName = Object.keys(parentElement._parent)[keyNo - 1];
+    const keyNo = Object.keys(parentElement._parent).length;
+    const keyName = Object.keys(parentElement._parent)[keyNo - 1];
     parentElement._parent[keyName] = nativeType(value);
   } catch (e) {}
 };
@@ -46,8 +46,8 @@ export const parseGoodreadsResponse = (data: any) => {
       ignoreInstruction: true,
       ignoreAttributes: true,
       ignoreComment: true,
-      ignoreCdata: true,
       ignoreDoctype: true,
+      // ignoreCdata: true,
       textFn: removeJsonTextAttribute,
     }),
   );
