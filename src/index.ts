@@ -13,6 +13,7 @@ const fetchAuthor = async (id: string): Promise<LooseObject> => {
   );
   const parsed = parseGoodreadsResponse(resp.data);
   console.log('Author response: ', parsed.author);
+  console.log('Books response: ', parsed.author.books);
   return parsed.author;
 };
 
@@ -43,24 +44,24 @@ const typeDefs = gql`
     id: Int
     isbn: Int
     isbn13: Int
-    textReviewsCount: Int
+    text_reviews_count: Int
     uri: String
     title: String
-    titleWithoutSeries: String
-    imageUrl: String
-    smallImageUrl: String
-    largeImageUrl: String
+    title_without_series: String
+    image_url: String
+    small_image_url: String
+    large_image_ur: String
     link: String
-    numPages: Int
+    num_pages: Int
     format: String
-    editionInformation: String
+    edition_information: String
     publisher: String
-    publicationDay: Int
-    publicationYear: Int
-    publicationMonth: Int
+    publication_day: Int
+    publication_year: Int
+    publication_month: Int
     published: Int
-    averageRating: Int
-    ratingsCount: Int
+    average_rating: Int
+    ratings_count: Int
     description: String
     authors: [Author]
   }
