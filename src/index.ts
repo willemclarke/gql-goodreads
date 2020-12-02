@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 import { config } from 'dotenv';
 import { ApolloServer, gql } from 'apollo-server';
 import { LooseObject, parseGoodreadsResponse } from './utils';
@@ -12,8 +13,7 @@ const fetchAuthor = async (id: string): Promise<LooseObject> => {
     `https://www.goodreads.com/author/show/${id}?format=xml&key=${goodreadsKey}`,
   );
   const parsed = parseGoodreadsResponse(resp.data);
-  console.log('Author response: ', parsed.author);
-  console.log('Books response: ', parsed.author.books);
+  console.log('Authors response: ', parsed.author.books.book.authors);
   return parsed.author;
 };
 
@@ -37,20 +37,19 @@ const typeDefs = gql`
     bornAt: String
     diedAt: String
     goodreads_author: Boolean
-    # books: [Book]!
+    books: [Book]!
   }
 
   type Book {
     id: Int
-    isbn: Int
-    isbn13: Int
+    isbn: Float
+    isbn13: Float
     text_reviews_count: Int
     uri: String
     title: String
     title_without_series: String
     image_url: String
     small_image_url: String
-    large_image_ur: String
     link: String
     num_pages: Int
     format: String
@@ -60,7 +59,7 @@ const typeDefs = gql`
     publication_year: Int
     publication_month: Int
     published: Int
-    average_rating: Int
+    average_rating: Float
     ratings_count: Int
     description: String
     authors: [Author]
@@ -76,9 +75,11 @@ const resolvers = {
     author: async () => await fetchAuthor('18541'),
   },
   Author: {
-    // books: async (author: LooseObject) => {
-    //   return author.books.book;
-    // },
+    books: async (author: LooseObject) => {
+      // Creating an array of Books to match type specified type
+      const parsedBooks = _.values(author.books.book);
+      return parsedBooks;
+    },
     link: async (author: LooseObject) => {
       return author.link._cdata;
     },
