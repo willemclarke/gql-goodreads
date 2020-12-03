@@ -13,8 +13,7 @@ const fetchAuthor = async (id: string): Promise<LooseObject> => {
     `https://www.goodreads.com/author/show/${id}?format=xml&key=${goodreadsKey}`,
   );
   const parsed = parseGoodreadsResponse(resp.data);
-  console.log('Individual book authors: ', parsed.author.books.book[0].authors.author);
-  // console.log('books authors test, ', _.values(parsed.author.books.book[0].authors.author));
+  console.log('Individual book authors: ', parsed.author.books.book);
   return parsed.author;
 };
 
@@ -105,15 +104,8 @@ const resolvers = {
     },
   },
   Book: {
-    image_url: async (book: LooseObject) => {
-      return book.image_url;
-    },
-    small_image_url: async (book: LooseObject) => {
-      return book.small_image_url;
-    },
-    link: async (book: LooseObject) => {
-      return book.link;
-    },
+    // Note did not need to manually resolve image_url, small_image_url & link like in 'Author' or 'BookAuthor'
+    // as no _.cdata field existed
     authors: async (book: LooseObject) => {
       const parsedBooks = _.values(book.authors);
       return parsedBooks;
@@ -121,7 +113,6 @@ const resolvers = {
   },
   BookAuthor: {
     image_url: async (author: LooseObject) => {
-      console.log('halllppp!!!: ', author);
       return author.image_url._cdata;
     },
     small_image_url: async (author: LooseObject) => {
