@@ -58,8 +58,16 @@ export const typeDefs = gql`
     text_reviews_count: Int
   }
 
+  type ListAuthor {
+    id: String
+    name: String
+    link: String
+    books: [Book]
+  }
+
   type Query {
-    author(id: ID!): Author
+    author_show(id: ID!): Author
     book: [Book]
+    author_list(id: ID!): ListAuthor
   }
 `;
