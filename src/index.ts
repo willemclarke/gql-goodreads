@@ -106,7 +106,6 @@ const resolvers = {
   },
   Book: {
     image_url: async (book: LooseObject) => {
-      console.log('help!!!: ', book);
       return book.image_url;
     },
     small_image_url: async (book: LooseObject) => {
@@ -118,6 +117,18 @@ const resolvers = {
     authors: async (book: LooseObject) => {
       const parsedBooks = _.values(book.authors);
       return parsedBooks;
+    },
+  },
+  BookAuthor: {
+    image_url: async (author: LooseObject) => {
+      console.log('halllppp!!!: ', author);
+      return author.image_url._cdata;
+    },
+    small_image_url: async (author: LooseObject) => {
+      return author.small_image_url._cdata;
+    },
+    link: async (author: LooseObject) => {
+      return author.link._cdata;
     },
   },
 };
