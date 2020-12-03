@@ -22,8 +22,9 @@ export const typeDefs = gql`
   }
 
   type Book {
-    id: Int
-    isbn: Float
+    id: String
+    # isbn set as string and still getting error?
+    isbn: String
     isbn13: Float
     text_reviews_count: Int
     uri: String
@@ -58,8 +59,8 @@ export const typeDefs = gql`
     text_reviews_count: Int
   }
 
-  type ListAuthor {
-    id: String
+  type AuthorBooksList {
+    id: Int
     name: String
     link: String
     books: [Book]
@@ -68,6 +69,6 @@ export const typeDefs = gql`
   type Query {
     author_show(id: ID!): Author
     book: [Book]
-    author_list(id: ID!): ListAuthor
+    author_list(id: ID!): AuthorBooksList
   }
 `;

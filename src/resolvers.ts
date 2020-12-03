@@ -1,12 +1,16 @@
 import _ from 'lodash';
-import { fetchAuthor } from './index';
+import { fetchAuthor, fetchBook } from './index';
 import { LooseObject } from './utils';
 
 export const resolvers = {
   Query: {
-    author: async (parent: any, args: any) => {
+    author_show: async (parent: any, args: any) => {
       const { id } = args;
       return await fetchAuthor(id);
+    },
+    author_list: async (parent: any, args: any) => {
+      const { id } = args;
+      return await fetchBook(id);
     },
   },
   Author: {
@@ -28,7 +32,22 @@ export const resolvers = {
       return parsedBooks;
     },
   },
+  AuthorBooksList: {
+    link: async (parent: LooseObject) => {
+      return parent.link._cdata;
+    },
+    books: async (parent: LooseObject) => {
+      // Creating an array of Books to match type specified type
+      const parsedBooks = _.values(parent.books.book);
+      return parsedBooks;
+    },
+  },
   Book: {
+    // toString isbn as it can be both Int and String
+    // isbn: async (book: LooseObject) => {
+    //   const isbnToString = book.isbn.toString();
+    //   return isbnToString;
+    // },
     // Note did not need to manually resolve image_url, small_image_url & link like in 'Author' or 'BookAuthor'
     // as no _.cdata field existed
     authors: async (book: LooseObject) => {
