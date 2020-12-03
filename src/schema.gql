@@ -1,5 +1,5 @@
 type Author {
-  id: String!
+  id: ID!
   name: String
   link: String
   fans_count: Int
@@ -56,5 +56,5 @@ type BookAuthor {
 }
 
 type Query {
-  author: Author
+  author(id: ID!): Author
 }

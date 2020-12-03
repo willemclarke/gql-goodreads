@@ -13,11 +13,19 @@ const fetchAuthor = async (id: string): Promise<LooseObject> => {
     `https://www.goodreads.com/author/show/${id}?format=xml&key=${goodreadsKey}`,
   );
   const parsed = parseGoodreadsResponse(resp.data);
-  console.log('Individual book authors: ', parsed.author.books.book);
+  console.log('');
   return parsed.author;
 };
 
-fetchAuthor('18541');
+// const fetchBook = async (id: string) => {
+//   const resp = await axios.get(
+//     `https://www.goodreads.com/author/list/${id}?format=xml&key=${goodreadsKey}`,
+//   );
+//   const parsed = parseGoodreadsResponse(resp.data);
+//   // console.log('Authors book list: ', parsed.author.books);
+//   return parsed.author;
+// };
+
 const typeDefs = gql`
   type Author {
     id: String!
@@ -65,24 +73,29 @@ const typeDefs = gql`
   }
 
   type BookAuthor {
+    id: Int
+    name: String
+    role: String
     image_url: String
     small_image_url: String
     link: String
-    id: Int
-    name: String
     average_rating: Float
     ratings_count: Int
     text_reviews_count: Int
   }
 
   type Query {
-    author: Author
+    author(id: ID!): Author
+    book: [Book]
   }
 `;
 
 const resolvers = {
   Query: {
-    author: async () => await fetchAuthor('18541'),
+    author: async (parent: any, args: any) => {
+      const { id } = args;
+      return await fetchAuthor(id);
+    },
   },
   Author: {
     link: async (author: LooseObject) => {
