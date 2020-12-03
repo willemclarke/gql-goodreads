@@ -13,16 +13,16 @@ const fetchAuthor = async (id: string): Promise<LooseObject> => {
     `https://www.goodreads.com/author/show/${id}?format=xml&key=${goodreadsKey}`,
   );
   const parsed = parseGoodreadsResponse(resp.data);
-  console.log('Authors response: ', parsed.author.books.book.authors);
+  console.log('Individual book authors: ', parsed.author.books.book[0].authors.author);
+  // console.log('books authors test, ', _.values(parsed.author.books.book[0].authors.author));
   return parsed.author;
 };
 
 fetchAuthor('18541');
-
 const typeDefs = gql`
   type Author {
     id: String!
-    name: String!
+    name: String
     link: String
     fans_count: Int
     author_followers_count: Int
@@ -62,7 +62,18 @@ const typeDefs = gql`
     average_rating: Float
     ratings_count: Int
     description: String
-    authors: [Author]
+    authors: [BookAuthor]
+  }
+
+  type BookAuthor {
+    image_url: String
+    small_image_url: String
+    link: String
+    id: Int
+    name: String
+    average_rating: Float
+    ratings_count: Int
+    text_reviews_count: Int
   }
 
   type Query {
@@ -75,11 +86,6 @@ const resolvers = {
     author: async () => await fetchAuthor('18541'),
   },
   Author: {
-    books: async (author: LooseObject) => {
-      // Creating an array of Books to match type specified type
-      const parsedBooks = _.values(author.books.book);
-      return parsedBooks;
-    },
     link: async (author: LooseObject) => {
       return author.link._cdata;
     },
@@ -92,11 +98,32 @@ const resolvers = {
     small_image_url: async (author: LooseObject) => {
       return author.small_image_url._cdata;
     },
+    books: async (author: LooseObject) => {
+      // Creating an array of Books to match type specified type
+      const parsedBooks = _.values(author.books.book);
+      return parsedBooks;
+    },
+  },
+  Book: {
+    image_url: async (book: LooseObject) => {
+      console.log('help!!!: ', book);
+      return book.image_url;
+    },
+    small_image_url: async (book: LooseObject) => {
+      return book.small_image_url;
+    },
+    link: async (book: LooseObject) => {
+      return book.link;
+    },
+    authors: async (book: LooseObject) => {
+      const parsedBooks = _.values(book.authors);
+      return parsedBooks;
+    },
   },
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`);
+  console.log(`🚀 Server ready at ${url}`);
 });
