@@ -1,7 +1,6 @@
 export interface Author {
   id: string;
   name: string;
-
   fans_count: string;
   author_followers_count: string;
   link: { _cdata: string };
