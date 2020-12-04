@@ -15,5 +15,7 @@
 
 ### Example of queries
 
+- author_show query:
 ![author_show query](https://i.gyazo.com/89efddd835449cae66fc78b0602fb0dc.png)
+- author_book_list query:
 ![author_book_list query](https://i.gyazo.com/3b70d3f503bb8c2563dd4b5e1b20390b.png)
