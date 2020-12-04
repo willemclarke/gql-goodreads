@@ -22,7 +22,7 @@ export interface AuthorBookList {
   id: string;
   name: string;
   link: { _cdata: string };
-  books: [Book];
+  books: { book: [Book] };
 }
 
 export interface Book {

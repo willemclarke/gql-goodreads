@@ -45,7 +45,7 @@ export const resolvers = {
     link: async (authorBookList: AuthorBookList) => {
       return authorBookList.link._cdata;
     },
-    books: async (authorBookList: LooseObject) => {
+    books: async (authorBookList: AuthorBookList) => {
       // Creating an array of Books to match type specified type in schema
       const parsedBooks = _.values(authorBookList.books.book);
       return parsedBooks;
