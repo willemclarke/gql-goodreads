@@ -15,10 +15,11 @@ const removeEmptyObjects = (obj: LooseObject): LooseObject => {
 };
 
 const nativeType = (value: any) => {
-  const nValue = Number(value);
-  if (!isNaN(nValue)) {
-    return nValue;
-  }
+  // Note: commented out below as I prefer numbers such as ID's and ratings to be string instead of nunber
+  // const nValue = Number(value);
+  // if (!isNaN(nValue)) {
+  //   return nValue;
+  // }
   const bValue = value.toLowerCase();
   if (bValue === 'true') {
     return true;
@@ -47,7 +48,6 @@ export const parseGoodreadsResponse = (data: any) => {
       ignoreAttributes: true,
       ignoreComment: true,
       ignoreDoctype: true,
-      // ignoreCdata: true,
       textFn: removeJsonTextAttribute,
     }),
   );
