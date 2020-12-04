@@ -1,16 +1,16 @@
 import _ from 'lodash';
-import { fetchAuthor, fetchAuthorBookList } from './index';
-import { Author, AuthorBookList, Book, BookAuthor } from './types';
+import { fetchAuthor, fetchAuthorBookList, fromEnv } from './api';
+import { Author, Book } from './types';
 
 export const resolvers = {
   Query: {
     author_show: async (_: any, args: any) => {
       const { id } = args;
-      return await fetchAuthor(id);
+      return await fetchAuthor(id, fromEnv());
     },
     author_book_list: async (_: any, args: any) => {
       const { id } = args;
-      return await fetchAuthorBookList(id);
+      return await fetchAuthorBookList(id, fromEnv());
     },
   },
   Author: {
@@ -40,33 +40,12 @@ export const resolvers = {
       return parsedBooks;
     },
   },
-  AuthorBooksList: {
-    link: async (authorBookList: AuthorBookList) => {
-      return authorBookList.link._cdata;
-    },
-    books: async (authorBookList: AuthorBookList) => {
-      // Creating an array of Books to match type specified in schema
-      const parsedBooks = _.values(authorBookList.books.book);
-      return parsedBooks;
-    },
-  },
   Book: {
     // Note did not need to manually resolve image_url, small_image_url & link like in 'Author' or 'BookAuthor'
     // as no _.cdata field existed
     authors: async (book: Book) => {
       const parsedBooks = _.values(book.authors);
       return parsedBooks;
-    },
-  },
-  BookAuthor: {
-    image_url: async (bookAuthor: BookAuthor) => {
-      return bookAuthor.image_url._cdata;
-    },
-    small_image_url: async (bookAuthor: BookAuthor) => {
-      return bookAuthor.small_image_url._cdata;
-    },
-    link: async (bookAuthor: BookAuthor) => {
-      return bookAuthor.link._cdata;
     },
   },
 };

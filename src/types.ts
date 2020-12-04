@@ -16,13 +16,10 @@ export interface Author {
   died_at: string;
   goodreads_author: boolean;
   books: { book: [Book] };
-}
-
-export interface AuthorBookList {
-  id: string;
-  name: string;
-  link: { _cdata: string };
-  books: { book: [Book] };
+  average_rating: string;
+  ratings_count: string;
+  text_reviews_count: string;
+  role: string;
 }
 
 export interface Book {
@@ -46,17 +43,5 @@ export interface Book {
   average_rating: string;
   ratings_count: string;
   description: string;
-  authors: [BookAuthor];
-}
-
-export interface BookAuthor {
-  id: string;
-  name: string;
-  role: string;
-  image_url: { _cdata: string };
-  small_image_url: { _cdata: string };
-  link: { _cdata: string };
-  average_rating: string;
-  ratings_count: string;
-  text_reviews_count: string;
+  authors: [Author];
 }
