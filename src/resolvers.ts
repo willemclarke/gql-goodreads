@@ -26,8 +26,16 @@ export const resolvers = {
     small_image_url: async (author: LooseObject) => {
       return author.small_image_url._cdata;
     },
+    about: async (author: LooseObject) => {
+      // Some authors don't have about section - manually resolving
+      return author.about ? author.about._cdata : null;
+    },
+    influences: async (author: LooseObject) => {
+      // Some authors don't have influences section - manually resolving
+      return author.influences ? author.influences._cdata : null;
+    },
     books: async (author: LooseObject) => {
-      // Creating an array of Books to match type specified type
+      // Creating an array of Books to match type specified type in schema
       const parsedBooks = _.values(author.books.book);
       return parsedBooks;
     },
@@ -37,7 +45,7 @@ export const resolvers = {
       return parent.link._cdata;
     },
     books: async (parent: LooseObject) => {
-      // Creating an array of Books to match type specified type
+      // Creating an array of Books to match type specified type in schema
       const parsedBooks = _.values(parent.books.book);
       return parsedBooks;
     },

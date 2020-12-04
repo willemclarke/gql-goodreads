@@ -20,8 +20,8 @@ export const typeDefs = gql`
     works_count: String
     gender: String
     hometown: String
-    bornAt: String
-    diedAt: String
+    born_at: String
+    died_at: String
     goodreads_author: Boolean
     books: [Book]!
   }
