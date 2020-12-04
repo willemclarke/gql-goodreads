@@ -30,9 +30,3 @@ export const fetchAuthor = async (id: string, key: string): Promise<Author> => {
   const parsed = parseGoodreadsResponse(resp.data);
   return parsed.author;
 };
-
-export const fetchAuthorBookList = async (id: string, key: string): Promise<Author> => {
-  const resp = await axios.get(`https://www.goodreads.com/author/list/${id}?format=xml&key=${key}`);
-  const parsed = parseGoodreadsResponse(resp.data);
-  return parsed.author;
-};

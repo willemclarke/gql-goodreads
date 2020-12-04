@@ -1,9 +1,8 @@
-import { ApolloServer, gql } from 'apollo-server';
+import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
   type Query {
-    author_show(id: ID!): Author
-    author_book_list(id: ID!): Author
+    author(id: ID!): Author
   }
 
   type Author {
@@ -27,11 +26,11 @@ export const typeDefs = gql`
     ratings_count: String
     text_reviews_count: String
     role: String
-    books: [Book]!
+    books: [Book]
   }
 
   type Book {
-    id: String
+    id: String!
     isbn: String
     isbn13: String
     text_reviews_count: String

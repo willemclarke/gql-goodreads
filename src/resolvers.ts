@@ -1,16 +1,12 @@
 import _ from 'lodash';
-import { fetchAuthor, fetchAuthorBookList, fromEnv } from './api';
+import { fetchAuthor, fromEnv } from './api';
 import { Author, Book } from './types';
 
 export const resolvers = {
   Query: {
-    author_show: async (_: any, args: any) => {
+    author: async (_: any, args: any) => {
       const { id } = args;
       return await fetchAuthor(id, fromEnv().goodreadsToken);
-    },
-    author_book_list: async (_: any, args: any) => {
-      const { id } = args;
-      return await fetchAuthorBookList(id, fromEnv().goodreadsToken);
     },
   },
   Author: {
