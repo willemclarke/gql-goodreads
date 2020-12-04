@@ -1,24 +1,32 @@
 export interface Author {
   id: string;
   name: string;
-  link: string;
+
   fans_count: string;
   author_followers_count: string;
-  large_image_url: string;
-  image_url: string;
-  small_image_url: string;
-  about: string;
-  influences: string;
+  link: { _cdata: string };
+  image_url: { _cdata: string };
+  large_image_url: { _cdata: string };
+  small_image_url: { _cdata: string };
+  about: { _cdata: string };
+  influences: { _cdata: string };
   worksCount: string;
   gender: string;
   hometown: string;
   born_at: string;
   died_at: string;
   goodreads_author: boolean;
+  books: { book: [Book] };
+}
+
+export interface AuthorBookList {
+  id: string;
+  name: string;
+  link: { _cdata: string };
   books: [Book];
 }
 
-interface Book {
+export interface Book {
   id: string;
   isbn: string;
   isbn13: string;
@@ -39,5 +47,17 @@ interface Book {
   average_rating: string;
   ratings_count: string;
   description: string;
-  authors: [Author];
+  authors: [BookAuthor];
+}
+
+export interface BookAuthor {
+  id: string;
+  name: string;
+  role: string;
+  image_url: { _cdata: string };
+  small_image_url: { _cdata: string };
+  link: { _cdata: string };
+  average_rating: string;
+  ratings_count: string;
+  text_reviews_count: string;
 }

@@ -3,7 +3,7 @@ import { ApolloServer, gql } from 'apollo-server';
 export const typeDefs = gql`
   type Query {
     author_show(id: ID!): Author
-    author_list(id: ID!): AuthorBooksList
+    author_book_list(id: ID!): AuthorBooksList
   }
 
   type Author {
@@ -24,6 +24,13 @@ export const typeDefs = gql`
     died_at: String
     goodreads_author: Boolean
     books: [Book]!
+  }
+
+  type AuthorBooksList {
+    id: String
+    name: String
+    link: String
+    books: [Book]
   }
 
   type Book {
@@ -61,12 +68,5 @@ export const typeDefs = gql`
     average_rating: String
     ratings_count: String
     text_reviews_count: String
-  }
-
-  type AuthorBooksList {
-    id: String
-    name: String
-    link: String
-    books: [Book]
   }
 `;
