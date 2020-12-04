@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { fetchAuthor, fetchBook } from './index';
+import { fetchAuthor, fetchAuthorBookList } from './index';
 import { LooseObject } from './utils';
 
 export const resolvers = {
@@ -10,7 +10,7 @@ export const resolvers = {
     },
     author_list: async (parent: any, args: any) => {
       const { id } = args;
-      return await fetchBook(id);
+      return await fetchAuthorBookList(id);
     },
   },
   Author: {
@@ -43,11 +43,6 @@ export const resolvers = {
     },
   },
   Book: {
-    // toString isbn as it can be both Int and String
-    // isbn: async (book: LooseObject) => {
-    //   const isbnToString = book.isbn.toString();
-    //   return isbnToString;
-    // },
     // Note did not need to manually resolve image_url, small_image_url & link like in 'Author' or 'BookAuthor'
     // as no _.cdata field existed
     authors: async (book: LooseObject) => {

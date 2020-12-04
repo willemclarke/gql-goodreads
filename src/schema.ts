@@ -23,7 +23,6 @@ export const typeDefs = gql`
 
   type Book {
     id: String
-    # isbn set as string and still getting error?
     isbn: String
     isbn13: Float
     text_reviews_count: Int

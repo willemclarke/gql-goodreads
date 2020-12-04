@@ -18,7 +18,7 @@ export const fetchAuthor = async (id: string): Promise<LooseObject> => {
   return parsed.author;
 };
 
-export const fetchBook = async (id: string) => {
+export const fetchAuthorBookList = async (id: string) => {
   const resp = await axios.get(
     `https://www.goodreads.com/author/list/${id}?format=xml&key=${goodreadsKey}`,
   );
@@ -31,6 +31,3 @@ const server = new ApolloServer({ typeDefs, resolvers });
 server.listen().then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
-
-// For 4th Dec AKA Tomorrow
-// Figure out why ISBN is not working
