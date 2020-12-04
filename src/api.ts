@@ -4,7 +4,9 @@ import { Author } from './types';
 import { parseGoodreadsResponse } from './utils';
 import { config } from 'dotenv';
 
-type GoodreadsKey = string;
+export interface Config {
+  goodreadsToken: string;
+}
 
 config();
 
@@ -17,17 +19,19 @@ const getEnv = (value: string): string => {
   }
 };
 
-export const fromEnv = (): GoodreadsKey => {
-  return getEnv('GOODREADS_KEY');
+export const fromEnv = (): Config => {
+  return {
+    goodreadsToken: getEnv('GOODREADS_TOKEN'),
+  };
 };
 
-export const fetchAuthor = async (id: string, key: GoodreadsKey): Promise<Author> => {
+export const fetchAuthor = async (id: string, key: string): Promise<Author> => {
   const resp = await axios.get(`https://www.goodreads.com/author/show/${id}?format=xml&key=${key}`);
   const parsed = parseGoodreadsResponse(resp.data);
   return parsed.author;
 };
 
-export const fetchAuthorBookList = async (id: string, key: GoodreadsKey): Promise<Author> => {
+export const fetchAuthorBookList = async (id: string, key: string): Promise<Author> => {
   const resp = await axios.get(`https://www.goodreads.com/author/list/${id}?format=xml&key=${key}`);
   const parsed = parseGoodreadsResponse(resp.data);
   return parsed.author;
