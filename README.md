@@ -6,4 +6,11 @@
 - Interesting project as goodreads api returns xml, requiring extra handling of data
 - Developed with Typescript and Apollo
 
+### Usage:
+
+- clone repository
+- `npm install`
+- Create .env file with `GOODREADS_KEY=your_goodreads_api_key`
+- `npm run start`
+
 ### Example of query:

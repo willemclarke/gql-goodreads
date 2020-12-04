@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { fetchAuthor, fetchAuthorBookList } from './index';
-import { LooseObject } from './utils';
 import { Author, AuthorBookList, Book, BookAuthor } from './types';
 
 export const resolvers = {
@@ -36,7 +35,7 @@ export const resolvers = {
       return author.influences ? author.influences._cdata : null;
     },
     books: async (author: Author) => {
-      // Creating an array of Books to match type specified type in schema
+      // Creating an array of Books to match type specified in schema
       const parsedBooks = _.values(author.books.book);
       return parsedBooks;
     },
@@ -46,7 +45,7 @@ export const resolvers = {
       return authorBookList.link._cdata;
     },
     books: async (authorBookList: AuthorBookList) => {
-      // Creating an array of Books to match type specified type in schema
+      // Creating an array of Books to match type specified in schema
       const parsedBooks = _.values(authorBookList.books.book);
       return parsedBooks;
     },
